@@ -1,0 +1,9 @@
+spring:
+  application: La Podrida Web App
+
+server:
+  port: 8081
+
+resource:
+  game: http://localhost:8080
+
