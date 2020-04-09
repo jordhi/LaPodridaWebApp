@@ -20,6 +20,7 @@ public class GameService {
     private String resource;
 
     public List<User> findAll() {
+
         return Arrays.stream(
                 Objects.requireNonNull(
                         restTemplate.getForObject(
