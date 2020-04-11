@@ -29,6 +29,9 @@ public class GameService {
         ).collect(Collectors.toList());
     }
 
+    public void addUser(User user) {
+        restTemplate.postForObject(resource, user, User.class);
+    }
 
 
 }
