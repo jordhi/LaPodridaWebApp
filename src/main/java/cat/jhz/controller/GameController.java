@@ -1,14 +1,10 @@
 package cat.jhz.controller;
 
-import cat.jhz.model.User;
 import cat.jhz.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping(GameController.GAME)
@@ -35,8 +31,6 @@ public class GameController {
         model.addAttribute("users", gameService.findAll());
         return "game";
     }*/
-
-
 
 
 }

@@ -9,14 +9,30 @@
 </head>
 
 <body>
-<h1>Playing</h1>
-<h2>players:</h2>
-<table class="table-dark table-bordered">
-    <tr th:each="user: ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.getFullName()}"></td>
-    </tr>
-</table>
+<div class="container">
+    <h1>Playing</h1>
+</div>
+
+<div class="container-sm p-3 my-3 border">
+    <h2>players:</h2>
+    <div class="row">
+        <div class="col-3">
+            <table class="table table-dark table-bordered">
+                <tr th:each="user: ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.getFullName()}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-8">
+            <h3>Cartes</h3>
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-success">Play</button>
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>
