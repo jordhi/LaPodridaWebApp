@@ -10,7 +10,7 @@
 
 <body>
 <div class="container">
-    <h1>Playing</h1>
+    <h1>La Podrida</h1>
 </div>
 
 <div class="container-sm p-3 my-3 border">
@@ -28,7 +28,9 @@
             <h3>Cartes</h3>
         </div>
         <div class="col-1">
-            <button type="button" class="btn btn-success">Play</button>
+            <form class="form-signin" action="#" th:action="@{game}"  method="post">
+                <button type="submit" class="btn btn-primary">Start</button>
+            </form>
         </div>
     </div>
 </div>

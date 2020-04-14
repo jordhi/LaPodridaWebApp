@@ -12,6 +12,8 @@ public class GameController {
     public static final String GAME = "/game";
     public static final String USERS = "/users";
 
+    private boolean gameStarted = false;
+
     @Autowired
     GameService gameService;
 
@@ -26,11 +28,23 @@ public class GameController {
         return "game";
     }
 
-    /*@PostMapping
+    @PostMapping
     public String startGame(Model model) {
+        //read all logged users
         model.addAttribute("users", gameService.findAll());
+        if(gameStarted) {
+            //continuar amb el joc
+            //canviar de torn
+            //seguent repartiment
+        }else {
+            gameStarted = true;
+            //começar joc
+            //repartir cartes
+            //assignar torn
+        }
+        System.out.println("START");
         return "game";
-    }*/
+    }
 
 
 }
