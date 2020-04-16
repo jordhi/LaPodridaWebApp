@@ -1,6 +1,7 @@
 package cat.jhz.controller;
 
 import cat.jhz.model.Game;
+import cat.jhz.model.User;
 import cat.jhz.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class GameController {
     @GetMapping
     public String findUsers(Model model) {
         model.addAttribute("users", gameService.findAll());
+        model.addAttribute("torn", new User());
         return "game";
     }
 
@@ -49,7 +51,6 @@ public class GameController {
             //repartir cartes
             //assignar torn
         }
-        //TODO el game dona error en el if per canviar de color segons els torn del jugador
         return "game";
     }
 
