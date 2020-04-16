@@ -38,7 +38,7 @@ public class GameController {
         model.addAttribute("users", gameService.findAll());
         if(gameStarted) {
             System.out.println("CONTINUE PLAY");
-            model.addAttribute("torn", game.getTorn());
+            model.addAttribute("torn", game.nextTorn());
             //continuar amb el joc
             //canviar de torn
             //seguent repartiment
