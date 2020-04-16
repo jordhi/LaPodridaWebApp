@@ -1,5 +1,6 @@
 package cat.jhz.controller;
 
+import cat.jhz.model.Game;
 import cat.jhz.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ public class GameController {
     public static final String USERS = "/users";
 
     private boolean gameStarted = false;
+    private Game game;
 
     @Autowired
     GameService gameService;
@@ -33,16 +35,21 @@ public class GameController {
         //read all logged users
         model.addAttribute("users", gameService.findAll());
         if(gameStarted) {
+            System.out.println("CONTINUE PLAY");
+            model.addAttribute("torn", game.getTorn());
             //continuar amb el joc
             //canviar de torn
             //seguent repartiment
         }else {
             gameStarted = true;
+            game = new Game(gameService.findAll());
+            model.addAttribute("torn", game.getTorn());
+            System.out.println("NEW START");
             //começar joc
             //repartir cartes
             //assignar torn
         }
-        System.out.println("START");
+        //TODO el game dona error en el if per canviar de color segons els torn del jugador
         return "game";
     }
 
