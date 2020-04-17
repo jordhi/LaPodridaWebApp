@@ -1,5 +1,6 @@
 package cat.jhz.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,11 +9,13 @@ public class Game {
     private Deck deck;
     private int torn, repartir;
 
-    public Game(List<User> jugadors) {
+    public Game(List<User> jugadors, Deck deck) {
         this.jugadors = jugadors;
         torn = new Random().nextInt(jugadors.size());
         jugadors.get(torn);
         repartir = 1;
+        deck.createDeck();
+        this.deck = deck;
     }
 
     public User getTorn() {
@@ -23,5 +26,22 @@ public class Game {
         torn++;
         torn = torn % jugadors.size();
         return jugadors.get(torn);
+    }
+
+    //TODO TEST del repartiment
+    public void repartirCartes() {
+        for(int j=0; j<jugadors.size(); j++) {
+            List<Card> c = new ArrayList<>();
+            for(int i=0; i<repartir; i++) {
+                c.add(deck.getRandomCard());
+            }
+            jugadors.get(j).setCartes(c);
+        }
+        //el proper cop que es reparteix una carta més
+        repartir++;
+    }
+
+    public int getRepartir() {
+        return repartir;
     }
 }

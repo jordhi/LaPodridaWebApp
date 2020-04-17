@@ -1,5 +1,6 @@
 package cat.jhz.service;
 
+import cat.jhz.model.Card;
 import cat.jhz.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,10 @@ public class GameService {
 
     public void addUser(User user) {
         restTemplate.postForObject(resource, user, User.class);
+    }
+
+    public void addCardToUser(User user, Card card) {
+        restTemplate.put(resource + "/" + user.getId() + "/cards/" + card.getId(),String.class);
     }
 
 

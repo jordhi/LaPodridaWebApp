@@ -1,5 +1,6 @@
 package cat.jhz.controller;
 
+import cat.jhz.model.Deck;
 import cat.jhz.model.Game;
 import cat.jhz.model.User;
 import cat.jhz.service.GameService;
@@ -16,6 +17,7 @@ public class GameController {
 
     private boolean gameStarted = false;
     private Game game;
+    private Deck deck;
 
     @Autowired
     GameService gameService;
@@ -44,11 +46,21 @@ public class GameController {
             //seguent repartiment
         }else {
             gameStarted = true;
-            game = new Game(gameService.findAll());
+            //começar joc: nova baralla i nova partida
+            deck = new Deck();
+            game = new Game(gameService.findAll(),deck);
             model.addAttribute("torn", game.getTorn());
             System.out.println("NEW START");
-            //começar joc
+
             //repartir cartes
+            //TODO Test per verificar que els jugadors tenen les cartes que s'han assignat
+            game.repartirCartes();
+            //informar al server i a game.html de les cartes de cada jugador
+
+            //¡¡¡¡¡¡ ARA NOMES POSA CARTES A AL JUGADOR QUE TE EL TORN !!!!!
+            for(int i=0; i < game.getRepartir(); i++) {
+                gameService.addCardToUser(game.getTorn(), game.getTorn().getCartes().get(i));
+            }
             //assignar torn
         }
         return "game";
