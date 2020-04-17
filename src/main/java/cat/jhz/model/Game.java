@@ -37,6 +37,9 @@ public class Game {
             }
             jugadors.get(j).setCartes(c);
         }
+        System.out.println(jugadors.get(0).getCartes().toString());
+        System.out.println(jugadors.get(1).getCartes().toString());
+        //System.out.println(jugadors.get(2).getCartes().toString());
         //el proper cop que es reparteix una carta més
         repartir++;
     }

@@ -38,4 +38,11 @@ public class Card {
     public void setPal(String pal) {
         this.pal = pal;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id='" + id + '\'' +
+                '}';
+    }
 }

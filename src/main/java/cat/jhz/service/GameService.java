@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +17,9 @@ public class GameService {
 
     @Value("${resource.game}/users")
     private String resource;
+
+    @Value("${resource.game}/users/{id}/cards/{idcard}")
+    private String resource_newCard;
 
     public List<User> findAll() {
 
@@ -35,7 +36,11 @@ public class GameService {
     }
 
     public void addCardToUser(User user, Card card) {
-        restTemplate.put(resource + "/" + user.getId() + "/cards/" + card.getId(),String.class);
+        //restTemplate.put(resource + "/" + user.getId() + "/cards/" + card.getId(),String.class);
+        Map<String,String> params = new HashMap<>();
+        params.put("id", user.getId());
+        params.put("idcard", card.getId());
+        restTemplate.put(resource_newCard,Card.class,params);
     }
 
 
