@@ -55,12 +55,13 @@ public class GameController {
             //repartir cartes
             //TODO Test per verificar que els jugadors tenen les cartes que s'han assignat
             game.repartirCartes();
-            //informar al server i a game.html de les cartes de cada jugador
 
+            //TODO Arreglar assignar la carta que toca al judagor que toca
             //¡¡¡¡¡¡ ARA NOMES POSA CARTES A AL JUGADOR QUE TE EL TORN !!!!!
             for(int i=0; i < game.getRepartir(); i++) {
-                gameService.addCardToUser(game.getTorn(), game.getTorn().getCartes().get(i));
+                gameService.addCardToUser(game.getJugadors().get(i), game.getTorn().getCartes().get(i));
             }
+            //gameService.addCardToUser(game.getTorn(), );
             //assignar torn
         }
         return "game";

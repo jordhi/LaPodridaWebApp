@@ -47,4 +47,8 @@ public class Game {
     public int getRepartir() {
         return repartir;
     }
+
+    public List<User> getJugadors() {
+        return jugadors;
+    }
 }
