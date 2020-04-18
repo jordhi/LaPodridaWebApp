@@ -56,13 +56,15 @@ public class GameController {
             //TODO Test per verificar que els jugadors tenen les cartes que s'han assignat
             game.repartirCartes();
 
-            //TODO Arreglar assignar la carta que toca al judagor que toca
-            //¡¡¡¡¡¡ ARA NOMES POSA CARTES A AL JUGADOR QUE TE EL TORN !!!!!
-            for(int i=0; i < game.getRepartir(); i++) {
-                gameService.addCardToUser(game.getJugadors().get(i), game.getTorn().getCartes().get(i));
+            //Assign first round of card for all players
+            for(int j=0; j<game.getJugadors().size(); j++) {
+                for(int i=0; i < game.getRepartir(); i++) {
+                    gameService.addCardToUser(
+                            game.getJugadors().get(j),
+                            game.getJugadors().get(j).getCartes().get(i));
+                }
             }
-            //gameService.addCardToUser(game.getTorn(), );
-            //assignar torn
+            game.nextRound();
         }
         return "game";
     }
