@@ -2,6 +2,7 @@ package cat.jhz.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -12,7 +13,7 @@ public class User  {
     private String password;
     private String fullName;
 
-    List<Card> cartes;
+    List<Card> cartes = new ArrayList<>();
 
     public User() {}
 

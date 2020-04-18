@@ -18,7 +18,7 @@ public class GameService {
     @Value("${resource.game}/users")
     private String resource;
 
-    @Value("${resource.game}/users/{id}/cards/{idcard}")
+    @Value("${resource.game}/users/{id}/cards/")
     private String resource_newCard;
 
     public List<User> findAll() {
@@ -39,8 +39,8 @@ public class GameService {
         //restTemplate.put(resource + "/" + user.getId() + "/cards/" + card.getId(),String.class);
         Map<String,String> params = new HashMap<>();
         params.put("id", user.getId());
-        params.put("idcard", card.getId());
-        restTemplate.put(resource_newCard,Card.class,params);
+        //restTemplate.put(resource_newCard,Card.class,params);
+        restTemplate.put(resource + "/" + user.getId() + "/cards/",Card.class);
     }
 
 

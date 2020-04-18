@@ -8,7 +8,8 @@ public class Card {
     private String num;
     private String pal;
 
-    public Card() {}
+    public Card() {
+    }
 
     public Card(String id, String num, String pal) {
         this.id = id;
@@ -41,8 +42,10 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
+        return "{" +
                 "id='" + id + '\'' +
+                ", num='" + num + '\'' +
+                ", pal='" + pal + '\'' +
                 '}';
     }
 }
