@@ -5,39 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{webjars/bootstrap/4.4.1/css/bootstrap.min.css}"/>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
     <title>La Podrida</title>
 </head>
 
 <body>
-<div class="container">
+<div class="container-fluid bg-dark text-white">
     <h1>La Podrida</h1>
 </div>
 
-<div class="container border">
-    <h3>players:</h3>
+<div class="container-fluid border pt-2">
+    <h3>Players <i class="fas fa-user"></i></h3>
     <div class="row">
-        <div class="col-3">
-            <table class="table table-dark table-bordered">
+        <div class="col-md-3 table-responsive">
+            <table class="table table-striped table-bordered">
+
                 <tr th:each="user: ${users}">
                     <td th:text="${user.id}"></td>
 
                     <td th:text="${user.getFullName()}"
-                        th:style="${user.getFullName().equals(torn.getFullName()) ? 'color: #fff':'color: #000'}"> </td>
+                        th:style="${user.getFullName().equals(torn.getFullName()) ? 'color: #00b':'color: #000'}"> </td>
 
                 </tr>
             </table>
         </div>
-        <div class="col-8">
-            <table class="table table-bordered">
+        <div class="col-md-8">
+            <table class="table table-striped table-bordered">
                 <tr th:each="user: ${users}">
                     <td th:text="${user.getCartes()}"></td>
                 </tr>
             </table>
 
         </div>
-        <div class="col-1">
+        <div class="col-md-1">
             <form class="form-signin" action="#" th:action="@{game}"  method="post">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary btn-block">
                     <span th:text="${(repartir <= 1 || repartir == null) ? 'Start' : 'Next('+repartir+')'}"></span>
                 </button>
             </form>
