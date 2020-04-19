@@ -38,6 +38,7 @@ public class GameController {
     public String startGame(Model model) {
         //read all logged users
         model.addAttribute("users", gameService.findAll());
+
         if(gameStarted) {
             System.out.println("CONTINUE PLAY");
             model.addAttribute("torn", game.nextTorn());
@@ -64,8 +65,12 @@ public class GameController {
                             game.getJugadors().get(j).getCartes().get(i));
                 }
             }
-            game.nextRound();
+
         }
+        model.addAttribute("repartir",game.getRepartir());
+        game.nextRound();
+
+
         return "game";
     }
 

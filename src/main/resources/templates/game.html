@@ -13,8 +13,8 @@
     <h1>La Podrida</h1>
 </div>
 
-<div class="container-sm p-3 my-3 border">
-    <h2>players:</h2>
+<div class="container border">
+    <h3>players:</h3>
     <div class="row">
         <div class="col-3">
             <table class="table table-dark table-bordered">
@@ -28,11 +28,18 @@
             </table>
         </div>
         <div class="col-8">
-            <h3>Cartes</h3>
+            <table class="table table-bordered">
+                <tr th:each="user: ${users}">
+                    <td th:text="${user.getCartes()}"></td>
+                </tr>
+            </table>
+
         </div>
         <div class="col-1">
             <form class="form-signin" action="#" th:action="@{game}"  method="post">
-                <button type="submit" class="btn btn-primary">Start</button>
+                <button type="submit" class="btn btn-primary">
+                    <span th:text="${(repartir <= 1 || repartir == null) ? 'Start' : 'Next('+repartir+')'}"></span>
+                </button>
             </form>
         </div>
     </div>

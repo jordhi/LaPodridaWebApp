@@ -42,10 +42,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return "{" +
-                "id='" + id + '\'' +
-                ", num='" + num + '\'' +
-                ", pal='" + pal + '\'' +
-                '}';
+        return "{id=" + id + "}";
     }
 }
