@@ -43,6 +43,7 @@ public class GameController {
             System.out.println("CONTINUE PLAY");
             model.addAttribute("torn", game.nextTorn());
             //continuar amb el joc
+
             //canviar de torn
             //seguent repartiment
         }else {

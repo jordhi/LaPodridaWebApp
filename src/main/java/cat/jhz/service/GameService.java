@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +22,9 @@ public class GameService {
 
     @Value("${resource.game}/users/{id}")
     private String resource_newCard;
+
+    @Value("${resource.game}/deck/")
+    private String resource_deck;
 
     public List<User> findAll() {
 
@@ -40,6 +45,10 @@ public class GameService {
         Map<String,String> params = new HashMap<>();
         params.put("id", user.getId());
         restTemplate.put(resource + "/" + user.getId(),card,Card.class);
+    }
+
+    public Image getImagefromDeck(String id) {
+        return restTemplate.getForObject(resource_deck + id,Image.class);
     }
 
 
