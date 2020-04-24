@@ -46,7 +46,7 @@ public class GameService {
         params.put("id", user.getId());
         restTemplate.put(resource + "/" + user.getId(),card,Card.class);
     }
-
+    //TODO comprovar i usar aquest nou metode per veure si respon al getmapping de la api
     public Image getImagefromDeck(String id) {
         return restTemplate.getForObject(resource_deck + id,Image.class);
     }
