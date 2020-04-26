@@ -35,8 +35,12 @@
         <div class="col-md-8">
             <table class="table table-striped table-bordered">
                 <tr th:each="user: ${users}">
-                    <td th:text="${user.getCartes()}"></td>
-                    <img th:src="@{}">
+                    <span th:each="card: ${user.getCartes()}">
+                        <p th:text="${card.getId()}"></p>
+                        <td>
+                        <img th:src="@{http://192.168.1.145:8080/deck/${card.getId()}}">
+                        </td>
+                    </span>
                 </tr>
             </table>
 

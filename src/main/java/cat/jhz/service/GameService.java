@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.awt.*;
+import java.io.File;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +49,8 @@ public class GameService {
     }
     //TODO comprovar i usar aquest nou metode per veure si respon al getmapping de la api
     public Image getImagefromDeck(String id) {
-        return restTemplate.getForObject(resource_deck + id,Image.class);
+        byte[] imagBytes = restTemplate.getForObject(resource_deck + id, byte[].class);
+       return null;
     }
 
 

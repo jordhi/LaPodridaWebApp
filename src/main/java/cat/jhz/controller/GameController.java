@@ -68,6 +68,7 @@ public class GameController {
             }
 
         }
+        model.addAttribute("imgCarta", gameService.getImagefromDeck("11"));
         model.addAttribute("repartir",game.getRepartir());
         game.nextRound();
 
