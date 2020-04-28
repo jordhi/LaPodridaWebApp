@@ -18,6 +18,7 @@ public class GameController {
     private boolean gameStarted = false;
     private Game game;
     private Deck deck;
+    private int doStart = 0;
 
     @Autowired
     GameService gameService;
@@ -39,41 +40,47 @@ public class GameController {
         //read all logged users
         model.addAttribute("users", gameService.findAll());
 
-        if(gameStarted) {
-            System.out.println("CONTINUE PLAY");
-            model.addAttribute("torn", game.nextTorn());
-            //continuar amb el joc
+        if(gameService.findAll().size() > doStart) { //waiting start from all players
+            doStart++;
+            model.addAttribute("torn", new User());
+            System.out.println("juagdors que han fet login: " + doStart);
+        } else {
+            //TODO refactor this part of code after add doStart
+            if (gameStarted) {
+                System.out.println("CONTINUE PLAY");
+                model.addAttribute("torn", game.nextTorn());
+                //continuar amb el joc
 
-            //canviar de torn
-            //seguent repartiment
-        }else {
-            gameStarted = true;
-            //começar joc: nova baralla i nova partida
-            deck = new Deck();
-            game = new Game(gameService.findAll(),deck);
-            model.addAttribute("torn", game.getTorn());
-            System.out.println("NEW START");
+                //canviar de torn
+                //seguent repartiment
+            } else {
+                gameStarted = true;
+                //começar joc: nova baralla i nova partida
+                deck = new Deck();
+                game = new Game(gameService.findAll(), deck);
+                model.addAttribute("torn", game.getTorn());
+                System.out.println("NEW START");
 
-            //repartir cartes
-            //TODO Test per verificar que els jugadors tenen les cartes que s'han assignat
-            game.repartirCartes();
+                //TODO Test per verificar que els jugadors tenen les cartes que s'han assignat
+                game.repartirCartes();
+                sendDealingCardsToAPI();
 
-            //Assign first round of card for all players
-            for(int j=0; j<game.getJugadors().size(); j++) {
-                for(int i=0; i < game.getRepartir(); i++) {
-                    gameService.addCardToUser(
-                            game.getJugadors().get(j),
-                            game.getJugadors().get(j).getCartes().get(i));
-                }
             }
-
+            model.addAttribute("repartir", game.getRepartir());
+            game.nextRound();
         }
-        model.addAttribute("imgCarta", gameService.getImagefromDeck("11"));
-        model.addAttribute("repartir",game.getRepartir());
-        game.nextRound();
-
 
         return "game";
+    }
+
+    private void sendDealingCardsToAPI() {
+        for(int j=0; j<game.getJugadors().size(); j++) {
+            for(int i=0; i < game.getRepartir(); i++) {
+                gameService.addCardToUser(
+                        game.getJugadors().get(j),
+                        game.getJugadors().get(j).getCartes().get(i));
+            }
+        }
     }
 
 
