@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @Controller
 @RequestMapping(GameController.GAME)
 public class GameController {
@@ -29,20 +31,21 @@ public class GameController {
     }*/
 
     @GetMapping
-    public String findUsers(Model model) {
-        model.addAttribute("users", gameService.findAll());
+    public String findUsers(Model model) throws ExecutionException, InterruptedException {
+        model.addAttribute("users", gameService.findAll().get());
         model.addAttribute("torn", new User());
         return "game";
     }
 
     @PostMapping
-    public String startGame(Model model) {
+    public String startGame(Model model) throws ExecutionException, InterruptedException {
         //read all logged users
-        model.addAttribute("users", gameService.findAll());
-
-        if(gameService.findAll().size() > doStart) { //waiting start from all players
+        model.addAttribute("users", gameService.findAll().get());
+        model.addAttribute("start",doStart);
+        if(gameService.findAll().get().size() > doStart) { //waiting start from all players
             doStart++;
             model.addAttribute("torn", new User());
+
             System.out.println("juagdors que han fet login: " + doStart);
         } else {
             //TODO refactor this part of code after add doStart
@@ -57,7 +60,7 @@ public class GameController {
                 gameStarted = true;
                 //começar joc: nova baralla i nova partida
                 deck = new Deck();
-                game = new Game(gameService.findAll(), deck);
+                game = new Game(gameService.findAll().get(), deck);
                 model.addAttribute("torn", game.getTorn());
                 System.out.println("NEW START");
 
