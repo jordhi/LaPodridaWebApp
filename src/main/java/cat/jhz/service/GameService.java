@@ -37,11 +37,7 @@ public class GameService {
                                 resource, User[].class)
                 )
         ).collect(Collectors.toList());
-        try {
-            Thread.sleep(20000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         return CompletableFuture.completedFuture(results);
     }
 

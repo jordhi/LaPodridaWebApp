@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.async.WebAsyncTask;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,9 +36,26 @@ public class MainController {
     // Caldria llegir le Header per poder tenir més usuaris des de la mariexa IP
     
     @PostMapping
-    public String checkPassword(@ModelAttribute User user, Model model) {
+    public WebAsyncTask checkPassword(@ModelAttribute User user, Model model) {
         model.addAttribute("users", gameService.findAll());
-        if(user.getPassword().equals("xavals")) {
+        WebAsyncTask task = new WebAsyncTask(8000,
+                () -> {
+                    System.out.println("init asynctask");
+                   if(user.getPassword().equals("xavals")) {
+                       user.setId(request.getRemoteAddr());
+                       gameService.addUser(user);
+                       return "redirect:game";
+                   }else {
+                        model.addAttribute("pass", new User());
+                        return "index";
+                    }
+                }
+
+                );
+
+
+
+      /*  if(user.getPassword().equals("xavals")) {
             user.setId(request.getRemoteAddr());
             gameService.addUser(user);
             return "redirect:game";
@@ -45,7 +63,8 @@ public class MainController {
         else {
             model.addAttribute("pass", new User());
             return "index";
-        }
+        }*/
+        return task;
     }
 
 
