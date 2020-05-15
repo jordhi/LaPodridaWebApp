@@ -46,14 +46,14 @@ public class GameController {
             System.out.println("juagdors que han fet login: " + doStart);
         } else {
             //TODO refactor this part of code after add doStart
-            if (gameStarted) {
+            /*if (gameStarted) {
                 System.out.println("CONTINUE PLAY");
                 model.addAttribute("torn", game.nextTorn());
                 //continuar amb el joc
 
                 //canviar de torn
                 //seguent repartiment
-            } else {
+            } else {*/
                 gameStarted = true;
                 //começar joc: nova baralla i nova partida
                 deck = new Deck();
@@ -65,7 +65,7 @@ public class GameController {
                 game.repartirCartes();
                 sendDealingCardsToAPI();
 
-            }
+            //}
             model.addAttribute("repartir", game.getRepartir());
             game.nextRound();
         }

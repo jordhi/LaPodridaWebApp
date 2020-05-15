@@ -44,8 +44,6 @@ public class MainController {
             numPlayers = gameService.findAll().size();
 
             //We need to wait if there aren't the minimum of players
-            //TODO mirar el WebAsyncTask: https://www.thetechnojournals.com/2019/10/asynchronous-rest-service.html
-
             while(numPlayers<2) {
                 try {
                     wait();
