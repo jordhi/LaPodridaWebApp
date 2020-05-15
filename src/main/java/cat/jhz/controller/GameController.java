@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(GameController.GAME)
 public class GameController {
@@ -36,39 +38,35 @@ public class GameController {
     }
 
     @PostMapping
-    public String startGame(Model model) {
+    public synchronized String startGame(Model model) {
         //read all logged users
-        model.addAttribute("users", gameService.findAll());
+        List<User> userList = gameService.findAll();
+        model.addAttribute("users", userList);
 
-        if(gameService.findAll().size() > doStart) { //waiting start from all players
-            doStart++;
-            model.addAttribute("torn", new User());
-            System.out.println("juagdors que han fet login: " + doStart);
-        } else {
-            //TODO refactor this part of code after add doStart
-            /*if (gameStarted) {
-                System.out.println("CONTINUE PLAY");
-                model.addAttribute("torn", game.nextTorn());
-                //continuar amb el joc
-
-                //canviar de torn
-                //seguent repartiment
-            } else {*/
-                gameStarted = true;
-                //começar joc: nova baralla i nova partida
-                deck = new Deck();
-                game = new Game(gameService.findAll(), deck);
-                model.addAttribute("torn", game.getTorn());
-                System.out.println("NEW START");
-
-                //TODO Test per verificar que els jugadors tenen les cartes que s'han assignat
-                game.repartirCartes();
-                sendDealingCardsToAPI();
-
-            //}
-            model.addAttribute("repartir", game.getRepartir());
-            game.nextRound();
+        while(userList.size() < 2) { //waiting start from all players
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            userList = gameService.findAll();
         }
+        // If the second player get into then he can notify to the others in wait
+        notifyAll();
+        System.out.println("juagdors que han fet start: " + userList.size());
+        gameStarted = true;
+
+        //começar joc: nova baralla i nova partida
+        // CODI PROVISIONAL NOMÉS PER COMPROVACIONS
+        deck = new Deck();
+        game = new Game(gameService.findAll(), deck);
+        model.addAttribute("torn", game.getTorn());
+
+        game.repartirCartes();
+        sendDealingCardsToAPI();
+
+        model.addAttribute("repartir", game.getRepartir());
+        game.nextRound();
 
         return "game";
     }

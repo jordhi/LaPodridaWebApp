@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(MainController.ROOT)
 public class MainController {
     public static final String ROOT = "/";
-    private int numPlayers;
 
     @Autowired
     GameService gameService;
@@ -36,23 +35,11 @@ public class MainController {
     // Caldria llegir le Header per poder tenir més usuaris des de la mariexa IP
     
     @PostMapping
-    public synchronized String checkPassword(@ModelAttribute User user, Model model) {
+    public String checkPassword(@ModelAttribute User user, Model model) {
         model.addAttribute("users", gameService.findAll());
         if(user.getPassword().equals("xavals")) {
             user.setId(request.getRemoteAddr());
             gameService.addUser(user);
-            numPlayers = gameService.findAll().size();
-
-            //We need to wait if there aren't the minimum of players
-            while(numPlayers<2) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                numPlayers = gameService.findAll().size();
-            }
-            notifyAll();
             return "redirect:game";
         }
         else {
