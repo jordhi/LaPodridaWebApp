@@ -53,23 +53,30 @@ public class GameController {
         }
         // If the second player get into then he can notify to the others in wait
         notifyAll();
-        System.out.println("juagdors que han fet start: " + userList.size());
+        System.out.println("juagdors que han fet login: " + userList.size());
         gameStarted = true;
 
         //começar joc: nova baralla i nova partida
         // CODI PROVISIONAL NOMÉS PER COMPROVACIONS
-        deck = new Deck();
-        game = new Game(gameService.findAll(), deck);
-        model.addAttribute("torn", game.getTorn());
+        if(doStart < userList.size()) {
+            deck = new Deck();
+            game = new Game(gameService.findAll(), deck);
+            doStart++;
+        }
 
         game.repartirCartes();
         sendDealingCardsToAPI();
 
+        model.addAttribute("torn", game.getTorn());
+        model.addAttribute("users", userList);
         model.addAttribute("repartir", game.getRepartir());
         game.nextRound();
+        System.out.println(game.getRepartir());
 
         return "game";
     }
+
+    //TODO Cal enviar la llista de cartes del usuari i ino pas carta a carta, però cal modificar la API
 
     private void sendDealingCardsToAPI() {
         for(int j=0; j<game.getJugadors().size(); j++) {
