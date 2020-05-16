@@ -43,7 +43,7 @@ public class GameController {
         List<User> userList = gameService.findAll();
         model.addAttribute("users", userList);
 
-        while(userList.size() < 2) { //waiting start from all players
+        while(userList.size() < 2) { //waiting start from 2 players
             try {
                 wait();
             } catch (InterruptedException e) {
