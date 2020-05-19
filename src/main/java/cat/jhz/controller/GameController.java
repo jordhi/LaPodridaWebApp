@@ -58,6 +58,8 @@ public class GameController {
 
         //começar joc: nova baralla i nova partida
         // CODI PROVISIONAL NOMÉS PER COMPROVACIONS
+        //TODO Cal gestionar bé els torns i esborrar les cartes de la baralla només quan un jugador obté les cartes però refer la baralla al seguent torn
+
         if(doStart < userList.size()) {
             deck = new Deck();
             game = new Game(gameService.findAll(), deck);
@@ -76,15 +78,12 @@ public class GameController {
         return "game";
     }
 
-    //TODO Cal enviar la llista de cartes del usuari i ino pas carta a carta, però cal modificar la API
-
     private void sendDealingCardsToAPI() {
         for(int j=0; j<game.getJugadors().size(); j++) {
-            for(int i=0; i < game.getRepartir(); i++) {
-                gameService.addCardToUser(
-                        game.getJugadors().get(j),
-                        game.getJugadors().get(j).getCartes().get(i));
-            }
+            gameService.addCardToUser(
+                    game.getJugadors().get(j),
+                    game.getJugadors().get(j).getCartes());
+
         }
     }
 

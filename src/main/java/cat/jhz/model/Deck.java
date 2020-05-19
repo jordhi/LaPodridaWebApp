@@ -3,16 +3,18 @@ package cat.jhz.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class Deck {
     private List<Card> deck = new ArrayList<>();
-    private String name;
 
     public Deck() {}
 
     public List<Card> getDeck() {
         return deck;
+    }
+
+    public void setDeck(List<Card> deck) {
+        this.deck = deck;
     }
 
     public int size() {
@@ -30,14 +32,15 @@ public class Deck {
         return deck;
     }
 
-    public void deleteCard(String id) {
+    /*public void deleteCard(String id) {
         List<Card> lc = deck.stream().filter(c -> c.getId().equals(id)).collect(Collectors.toList());
         if(lc.size()!=1) throw new IllegalStateException();
         else deck.remove(lc.get(0));
-    }
+    }*/
 
     public Card getRandomCard() {
         Card card;
+        System.out.println("num de cartes: " + deck.size());
         int random = new Random().nextInt(deck.size());
         card = deck.get(random);
         deck.remove(random);
